@@ -1,6 +1,6 @@
 import csv
 import random
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 
@@ -26,7 +26,7 @@ def read_from_csv() -> List[dict]:
         with open(CSV_FILE, mode="r", newline="") as file:
             reader = csv.reader(file)
             for row in reader:
-                characters.append({"Name": int(row[0]), "Quote": row[1]})
+                characters.append({"name": row[0], "quote": row[1]})
     except FileNotFoundError:
         pass  # If file doesn't exist yet, just return empty list
     return characters
@@ -76,5 +76,4 @@ async def get_quote():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
-
+    uvicorn.run(app, host="127.0.0.1", port=1234)
